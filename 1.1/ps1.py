@@ -1,9 +1,8 @@
 s = 'azcbobobegghakl'
 
-nVowels = 0
-for char in s:
-        if char == "a" or char == "e" or char == "i" or char == "o" \
-            or char == 'u':
-                nVowels += 1
-        
-print ("Number of vowels:", nVowels)
+total = 0
+for pos in range(len(s) - 2):
+    if "bob" == s[pos:pos+3]:
+        total += 1
+
+print ("Number of times bob occurs is:", total)
