@@ -1,28 +1,23 @@
 # --------------------------------------------
-# trying and implementing binary search
+# Exercise: guess my number
 # --------------------------------------------
 
-test = float (input ("Number: "))
+print ("Please think of a number between 0 and 100!")
 
-# permissible error
-eps = 0.0001
-lwr = 0.0
-if test < 1:
-    upr = 1
-else:
-    upr = test
+lwr = 0
+upr = 100
 
-# computation
-ans = (lwr + upr) / 2
-while abs(ans ** 2 - test) >= eps:
-    if test > 0 and ans ** 2 > test:
-        upr = ans
-    elif test > 0 and ans ** 2 < test:
-        lwr = ans
-    elif test < 0 and ans ** 2 > test:
-        lwr = ans
-    elif test < 0 and ans ** 2 < test:
-        upr = ans
-    ans = (lwr + upr) / 2
-
-print (ans)
+while True:
+    curr = (lwr + upr) // 2
+    print ("Is your secret number " + str(curr) + "?")
+    test = input ("Enter 'h' to indicate the guess is too high. Enter 'l' to indicate the guess is too low. Enter 'c' to indicate I guessed correctly. ")
+    if test == "h":
+        upr = curr
+    elif test == "l":
+        lwr = curr
+    elif test == "c":
+        break
+    else:
+        print ("Sorry, I did not understand your input.")
+        
+print ('Game over. Your secret number was:', curr)
