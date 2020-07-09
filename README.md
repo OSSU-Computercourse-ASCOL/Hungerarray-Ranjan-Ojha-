@@ -1,6 +1,6 @@
 # RoadMap
 
-this is my take on OSSU courses and the planned pathway I might adopt. If any changes does occur then I will update here
+this is my take on OSSU courses and the planned roadmap I am planning to adopt. If any changes does occur then I will update here
 
 
 
