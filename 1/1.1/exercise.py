@@ -1,18 +1,22 @@
 # --------------------------------------------
-# Exercise: (self) Newton Rapson method
+# Exercise: (self) Integer to Binary
 # --------------------------------------------
 
+conv = int (input ("Number: "))
+binary = 0
+pos = 0
 
-# finding the root for the function 
-
-x = 1
-eps = 0.0001
-fun = x ** 2 - 24
-der = 2 * x 
-
-while abs(x ** 2 - 24) >= eps:
-    x = x - fun / der
-    fun = x ** 2 - 24
-    der = 2 * x
+if conv < 0:
+    isneg = True
+    conv = abs(conv)
+else:
+    isneg = False
     
-print ("root:", x)
+while conv != 0:
+    binary += (conv % 2) * 10 ** pos
+    conv //= 2
+    pos += 1
+if not isneg:
+    print ("Binary:", binary)    
+else:
+    print ("Binary:", -binary)
