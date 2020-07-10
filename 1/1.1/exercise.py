@@ -1,22 +1,18 @@
 # --------------------------------------------
-# Exercise: (self) Integer to Binary
+# Exercise: (self) Real number to Binary
 # --------------------------------------------
 
-conv = int (input ("Number: "))
-binary = 0
-pos = 0
+conv = float (input ("Number: "))
 
-if conv < 0:
-    isneg = True
-    conv = abs(conv)
-else:
-    isneg = False
-    
-while conv != 0:
-    binary += (conv % 2) * 10 ** pos
+p = 0
+while p != 17 and conv % 1 != 0:
+    p += 1
+    conv = conv * 2
+conv = int (conv)
+
+result = ''
+while conv > 0:
+    result = str(conv % 2) + result
     conv //= 2
-    pos += 1
-if not isneg:
-    print ("Binary:", binary)    
-else:
-    print ("Binary:", -binary)
+print (result[:-p] + "." + result[-p:])
+
