@@ -13,14 +13,13 @@ def isIn(char, aStr):
         return False
     
     curr = len(aStr) // 2
+    c = aStr[curr]
     if aStr[curr] == char:
         return True
     else:
-        if aStr[curr] < char:
-            isIn(char, aStr[:curr])
+        if char < aStr[curr]:
+            return isIn(char, aStr[:curr])
         else:
-            isIn(char, aStr[curr + 1:])
+            return isIn(char, aStr[curr + 1:])
 
-print(isIn("h","abcdhijkl"),
-isIn("c",""),
-isIn("","ahr"), isIn("",""))
+print(isIn('k', 'adfhklrrvwy'))
