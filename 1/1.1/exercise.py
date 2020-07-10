@@ -1,16 +1,21 @@
 # --------------------------------------------
-# Exercise: Towers of Hanoi (Recursive function)
+# Exercise: gcdIter
 # --------------------------------------------
 
-def printMove (fr, to):
-    print ("move from " + str(fr) + " to " + str(to))
+def gcdIter(a, b):
+    '''
+    a, b: positive integers
     
-def Towers(n, fr, to, spare):
-    if n == 1:
-        printMove (fr, to)
+    returns: a positive integer, the greatest common divisor of a & b.
+    '''
+    if a < b:
+        min = a
     else:
-        Towers(n-1, fr, spare, to)
-        Towers(1, fr, to, spare)
-        Towers(n-1, spare, to, fr)
+        min = b
+    
+    while min != 1 and  (a % min or b % min):
+        min -= 1
+    return min
+
+
         
-print (Towers (4, "p1", "p2", "p3"))
