@@ -1,25 +1,22 @@
 # --------------------------------------------
-# Exercise: check in sorted string
+# Exercise: polygon
 # --------------------------------------------
 
-def isIn(char, aStr):
-    '''
-    char: a single character
-    aStr: an alphabetized string
-    
-    returns: True if char is in aStr; False otherwise
-    '''
-    if not len(aStr) or not len(char):
-        return False
-    
-    curr = len(aStr) // 2
-    c = aStr[curr]
-    if aStr[curr] == char:
-        return True
-    else:
-        if char < aStr[curr]:
-            return isIn(char, aStr[:curr])
-        else:
-            return isIn(char, aStr[curr + 1:])
+import math
 
-print(isIn('k', 'adfhklrrvwy'))
+def polysum (n, s):
+    '''
+    Parameters
+    ----------
+    n : int
+        the number of sides of polygon
+    s : float or int
+        the length of the side of polygon
+
+    Returns sum of area and square of the perimeter of the regular polygon
+    -------
+    '''
+    area = (0.25 * n * s * s) / (math.tan(math.pi / n))
+    peri = n * s
+    return round(area + peri * peri, 4)
+    
