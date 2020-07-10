@@ -1,21 +1,19 @@
 # --------------------------------------------
-# Exercise: gcdIter
+# Exercise: gcdRecur
 # --------------------------------------------
 
-def gcdIter(a, b):
+def gcdRecur(a, b):
     '''
     a, b: positive integers
     
     returns: a positive integer, the greatest common divisor of a & b.
     '''
-    if a < b:
-        min = a
+    if b == 0:
+        # gcd(a,0) = a
+        return a
     else:
-        min = b
+        # gcd(a, b) = gcd(b, a Euler division b 
+        # attributed to gcd (a,b) = gcd(a, a-b)
+        return gcdRecur(b, a % b)
     
-    while min != 1 and  (a % min or b % min):
-        min -= 1
-    return min
-
-
-        
+gcdRecur (100, 200)
