@@ -1,23 +1,14 @@
 # --------------------------------------------
-# Exercise: guess my number
+# Exercise: (self) Newton Rapson method
 # --------------------------------------------
 
-print ("Please think of a number between 0 and 100!")
 
-lwr = 0
-upr = 100
+# finding the root for the function [f(x) = x **2 - 24]
 
-while True:
-    curr = (lwr + upr) // 2
-    print ("Is your secret number " + str(curr) + "?")
-    test = input ("Enter 'h' to indicate the guess is too high. Enter 'l' to indicate the guess is too low. Enter 'c' to indicate I guessed correctly. ")
-    if test == "h":
-        upr = curr
-    elif test == "l":
-        lwr = curr
-    elif test == "c":
-        break
-    else:
-        print ("Sorry, I did not understand your input.")
-        
-print ('Game over. Your secret number was:', curr)
+curr = 1
+eps = 0.0001
+
+while abs(curr ** 2 - 24) >= eps:
+    curr = ( curr ** 2 + 24) / (2 * curr)
+    
+print ("root:", curr)
