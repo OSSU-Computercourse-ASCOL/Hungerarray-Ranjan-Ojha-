@@ -3,12 +3,16 @@
 # --------------------------------------------
 
 
-# finding the root for the function [f(x) = x **2 - 24]
+# finding the root for the function 
 
-curr = 1
+x = 1
 eps = 0.0001
+fun = x ** 2 - 24
+der = 2 * x 
 
-while abs(curr ** 2 - 24) >= eps:
-    curr = ( curr ** 2 + 24) / (2 * curr)
+while abs(x ** 2 - 24) >= eps:
+    x = x - fun / der
+    fun = x ** 2 - 24
+    der = 2 * x
     
-print ("root:", curr)
+print ("root:", x)
