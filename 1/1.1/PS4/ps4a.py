@@ -215,15 +215,16 @@ def playHand(hand, wordList, n):
       n: integer (HAND_SIZE; i.e., hand size required for additional points)
       
     """
-
+    
+    currHand = hand.copy()
     # Keep track of the total score
     totalScore = 0
     
     # As long as there are still letters left in the hand:
-    while calculateHandlen(hand):
+    while calculateHandlen(currHand):
         
         # Display the hand
-        displayHand(hand)
+        displayHand(currHand)
         
         # Ask user for input
         word = input('Enter word, or a "." to indicate that you are finished: ').lower()
@@ -238,7 +239,7 @@ def playHand(hand, wordList, n):
         else:
             
             # If the word is not valid:
-            if not isValidWord(word, hand, wordList):
+            if not isValidWord(word, currHand, wordList):
                 
                 # Reject invalid word (print a message followed by a blank line)
                 print ("Invalid word, please try again.")
@@ -254,7 +255,7 @@ def playHand(hand, wordList, n):
                 print ()
                 
                 # Update the hand 
-                hand = updateHand(hand, word)    
+                currHand = updateHand(currHand, word)    
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
     if word == ".":
@@ -278,8 +279,33 @@ def playGame(wordList):
  
     2) When done playing the hand, repeat from step 1    
     """
-    # TO DO ... <-- Remove this comment when you code this function
-    print("playGame not yet implemented.") # <-- Remove this line when you code the function
+    
+    hand = {}
+    while True:
+        # 1) Asks the user to input 'n' or 'r' or 'e'.
+        test = input(
+            "Enter n to deal a new hand, r to replay the last hand, or e to end game: ").lower()
+        
+        #   * If the user inputs 'n', let the user play a new (random) hand.
+        if test == "n":
+            hand = dealHand(HAND_SIZE)
+            playHand(hand, wordList, HAND_SIZE)
+        
+        #   * If the user inputs 'r', let the user play the last hand again.
+        elif test == "r":
+            if len(hand):
+                playHand(hand, wordList, HAND_SIZE)
+            else:
+                print ("You have not played a hand yet. Please play a new hand first!")
+        
+        #   * If the user inputs 'e', exit the game.
+        elif test == "e":
+            break
+        
+        #   * If the user inputs anything else, tell them their input was invalid.
+        else:
+            print ("Invalid command.")
+     
    
 
 
