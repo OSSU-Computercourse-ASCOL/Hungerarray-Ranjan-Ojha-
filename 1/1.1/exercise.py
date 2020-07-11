@@ -1,17 +1,14 @@
-def biggest(aDict):
-    '''
-    aDict: A dictionary, where all the values are lists.
+#--------------------------------------------------------------------
+# Exercise: Debugging practice
+#--------------------------------------------------------------------
 
-    returns: The key with the largest number of values associated with it
-    '''
-    high = 0
-    for i in aDict.values():
-        if high < len(i):
-            high = len(i)
-    for elem in aDict:
-        if len(aDict[elem]) == high:
-            return elem
-    
-    return 
+def normalize(numbers):
+    max_number = max(numbers)
+    for i in range(len(numbers)):
+        numbers[i] /= float(max_number)
+    return numbers
 
-print (biggest({'b': [1, 7, 5, 4, 3, 18, 10, 0], 'a': []}))
+try:
+    normalize([0, 0, 0])
+except ZeroDivisionError:
+    print ("Invalid maximum element")
