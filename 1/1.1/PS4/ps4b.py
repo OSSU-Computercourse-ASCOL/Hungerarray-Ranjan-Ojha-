@@ -125,12 +125,12 @@ def playGame(wordList):
     wordList: list (string)
     """
     flag = True
+    hand = {}
     while True:
         
         # 1) Asks the user to input 'n' or 'r' or 'e'.
         #     * If the user inputs 'e', immediately exit the game.
         #     * If the user inputs anything that's not 'n', 'r', or 'e', keep asking them again.
-        hand = {}
         while True:
             try:
                 gameType = input(

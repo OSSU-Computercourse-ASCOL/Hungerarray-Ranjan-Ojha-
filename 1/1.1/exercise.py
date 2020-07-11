@@ -1,14 +1,14 @@
 #--------------------------------------------------------------------
-# Exercise: Debugging practice
+# Exercise: First Class
 #--------------------------------------------------------------------
 
-def normalize(numbers):
-    max_number = max(numbers)
-    for i in range(len(numbers)):
-        numbers[i] /= float(max_number)
-    return numbers
-
-try:
-    normalize([0, 0, 0])
-except ZeroDivisionError:
-    print ("Invalid maximum element")
+class Coordinat(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def distance(self, other):
+        x_diff_sq = (self.x - other.x) ** 2
+        y_diff_sq = (self.y - other.y) ** 2
+        return (x_diff_sq + y_diff_sq) ** .5
+    
