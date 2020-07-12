@@ -1,39 +1,53 @@
 #--------------------------------------------------------------------
-# Exercise: Classes [building person]
+# Exercise: Generators (genPrime)
 #--------------------------------------------------------------------
-import datetime
 
-class Person(object):
-    
-    def __init__(self, name):
-        '''Create a person called name'''
-        self.name = name
-        self.birthday = None
-        self.lastName = name.split(" ")[-1]
-    
-    def __lt__(self, other):
-        """Return True if self's name is lexicographically less than other's name, and False otherwise"""
-        if self.lastName == other.lastName:
-            return self.name < other.name
-        else:
-            return self.lastName < other.lastName
-        
-    def setBirthday(self, month, day, year):
-        """sets self's birthday to birthdate"""
-        self.birthday = datetime.date(year, month, day)
-        
-    def getAge(self):
-        """Returns self's current age in days"""
-        if self.birthday == None:
-            raise ValueError
-        return (datetime.date.today() - self.birthday).days
-    
-    def getLastName(self):
-        """Return self's last name"""
-        return self.lastName
 
-    def __str__(self):
-        """Return self's name"""
-        return self.name
+def cachegenPrime():
+    num = 2
     
+    primeList = [2]
     
+    # helper function to find out if the given no. is prime or not
+    def isPrime(curr):
+        # given a list of prime numbers
+            # if the no. is divisible by any in the list return false
+        for i in primeList:
+            if not curr % i:
+                return False
+        
+        # we know it is a prime, so add it to list and return true
+        primeList.append(curr)
+        return True
+    
+    # helper function to find out next prime from here onwards
+    def nxtPrime(curr):
+        curr += 1
+        # keep on adding to curr until you reach next prime number
+        while not isPrime(curr):
+            curr += 1
+        return curr
+    
+    while True:
+        yield num
+        num = nxtPrime(num)
+
+def sqrtgenPrime():
+    num = 2
+    
+    def prime(val):
+        
+        for i in range(2, int(val ** 0.5) + 1):
+            if not val % i:
+                return False
+        return True
+    
+    def nxtPrime(curr):
+        curr += 1
+        while not prime(curr):
+            curr += 1
+        return curr
+    
+    while True:
+        yield num
+        num = nxtPrime(num)
