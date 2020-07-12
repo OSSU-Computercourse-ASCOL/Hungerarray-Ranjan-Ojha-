@@ -157,6 +157,9 @@ class PlaintextMessage(Message):
         code is repeated
         '''
         Message.__init__(self, text)
+        self.shift = shift
+        self.encrypting_dict = Message.build_shift_dict(self, shift)
+        self.message_text_encrypted = Message.apply_shift(self, shift)
         
 
     def get_shift(self):
@@ -165,7 +168,7 @@ class PlaintextMessage(Message):
         
         Returns: self.shift
         '''
-        pass #delete this line and replace with your code here
+        return self.shift
 
     def get_encrypting_dict(self):
         '''
@@ -173,7 +176,7 @@ class PlaintextMessage(Message):
         
         Returns: a COPY of self.encrypting_dict
         '''
-        pass #delete this line and replace with your code here
+        return self.encrypting_dict.copy()
 
     def get_message_text_encrypted(self):
         '''
@@ -181,7 +184,7 @@ class PlaintextMessage(Message):
         
         Returns: self.message_text_encrypted
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text_encrypted
 
     def change_shift(self, shift):
         '''
@@ -194,7 +197,9 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
-        pass #delete this line and replace with your code here
+        if not (0 <= shift and shift < 26):
+            raise ValueError("shift out of range and must be 0 <= shift < 26")
+        self.__init__(self.message_text, shift)
 
 
 class CiphertextMessage(Message):
@@ -208,7 +213,8 @@ class CiphertextMessage(Message):
             self.message_text (string, determined by input text)
             self.valid_words (list, determined using helper function load_words)
         '''
-        pass #delete this line and replace with your code here
+        Message.__init__(self, text)
+
 
     def decrypt_message(self):
         '''
@@ -226,14 +232,37 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        pass #delete this line and replace with your code here
+        bestShift = 0
+        maxValid = 0
+        
+        for i in range(26):
+            currDecipher = self.apply_shift(i)
+            
+            valid = 0
+            for word in currDecipher.split(" "):
+                if is_word(self.get_valid_words(), word):
+                    valid += 1
+            
+            if maxValid < valid:
+                maxValid = valid
+                bestShift = i
+            
+        return (bestShift, self.apply_shift(bestShift))
+
 
 #Example test case (PlaintextMessage)
 plaintext = PlaintextMessage('hello', 2)
 print('Expected Output: jgnnq')
 print('Actual Output:', plaintext.get_message_text_encrypted())
+print()
     
 #Example test case (CiphertextMessage)
 ciphertext = CiphertextMessage('jgnnq')
 print('Expected Output:', (24, 'hello'))
 print('Actual Output:', ciphertext.decrypt_message())
+print()
+
+def decrypt_story():
+    cipher = CiphertextMessage(get_story_string())
+    print (cipher.decrypt_message())
+    
