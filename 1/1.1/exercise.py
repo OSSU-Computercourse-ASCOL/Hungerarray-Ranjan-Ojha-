@@ -1,46 +1,39 @@
 #--------------------------------------------------------------------
-# Exercise: coordinate exercise
+# Exercise: Classes [building person]
 #--------------------------------------------------------------------
+import datetime
 
-class intSet(object):
-    """An intSet is a set of integers
-    The value is represented by a list of ints, self.vals.
-    Each int in the set occurs in self.vals exactly once."""
-
-    def __init__(self):
-        """Create an empty set of integers"""
-        self.vals = []
-
-    def insert(self, e):
-        """Assumes e is an integer and inserts e into self""" 
-        if not e in self.vals:
-            self.vals.append(e)
-
-    def member(self, e):
-        """Assumes e is an integer
-           Returns True if e is in self, and False otherwise"""
-        return e in self.vals
-
-    def remove(self, e):
-        """Assumes e is an integer and removes e from self
-           Raises ValueError if e is not in self"""
-        try:
-            self.vals.remove(e)
-        except:
-            raise ValueError(str(e) + ' not found')
+class Person(object):
+    
+    def __init__(self, name):
+        '''Create a person called name'''
+        self.name = name
+        self.birthday = None
+        self.lastName = name.split(" ")[-1]
+    
+    def __lt__(self, other):
+        """Return True if self's name is lexicographically less than other's name, and False otherwise"""
+        if self.lastName == other.lastName:
+            return self.name < other.name
+        else:
+            return self.lastName < other.lastName
+        
+    def setBirthday(self, month, day, year):
+        """sets self's birthday to birthdate"""
+        self.birthday = datetime.date(year, month, day)
+        
+    def getAge(self):
+        """Returns self's current age in days"""
+        if self.birthday == None:
+            raise ValueError
+        return (datetime.date.today() - self.birthday).days
+    
+    def getLastName(self):
+        """Return self's last name"""
+        return self.lastName
 
     def __str__(self):
-        """Returns a string representation of self"""
-        self.vals.sort()
-        return '{' + ','.join([str(e) for e in self.vals]) + '}'
+        """Return self's name"""
+        return self.name
     
-    def intersect(self, other):
-        """Returns a intSet that has integers that appear in both"""
-        result = intSet()
-        for i in self.vals:
-            if i in other.vals:
-                result.insert(i)
-        return result
     
-    def __len__(self):
-        return len(self.vals)
