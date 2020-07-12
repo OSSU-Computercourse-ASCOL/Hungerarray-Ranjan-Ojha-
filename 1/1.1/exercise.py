@@ -28,7 +28,7 @@ def cachegenPrime():
             curr += 1
         return curr
     
-    while True:
+    while True:Test
         yield num
         num = nxtPrime(num)
 
