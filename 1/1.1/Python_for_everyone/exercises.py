@@ -1,9 +1,11 @@
-# Exercise 5: Take the following Python code that stores a string:
-# str = 'X-DSPAM-Confidence:0.8475'
-# Use find and string slicing to extract the portion of the string after the
-# colon character and then use the float function to convert the extracted
-# string into a floating point number.
+# Exercise 1: Write a program to read through a file and print the contents
+# of the file (line by line) all in upper case. Executing the program will
+# look as follows:
 
-text = "X-DSPAM-Confidence:    0.8475"
-extract = text[text.find(":") + 1 : ]
-print (float(extract))
+fname = input("Enter a file name: ")
+fhandle = open(fname, "r")
+
+for line in fhandle:
+    line = line.rstrip()
+    print(line.upper())
+
