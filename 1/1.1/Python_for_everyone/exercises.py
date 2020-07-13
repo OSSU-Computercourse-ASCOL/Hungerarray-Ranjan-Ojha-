@@ -1,24 +1,25 @@
-# Exercise 3: Sometimes when programmers get bored or want to have a
-# bit of fun, they add a harmless Easter Egg to their program. Modify
-# the program that prompts the user for the file name so that it prints a
-# funny message when the user types in the exact file name “na na boo
-# boo”. The program should behave normally for all other files which
-# exist and don’t exist.
+# Exercise 1: Write a function called chop that takes a list and modifies
+# it, removing the first and last elements, and returns None. Then write
+# a function called middle that takes a list and returns a new list that
+# contains all but the first and last elements.
 
-try:
-    fname = input("Enter file name: ")
-    if fname == "na na boo boo":
-        print ("NA NA BOO BOO TO YOU - You have been punk'd!")
-        quit()
-    fhandle = open(fname, "r")
-except FileNotFoundError:
-    print ("File cannot be opened:", fname)
-    quit()
+def chop(ls):
+    ls.pop(0)
+    ls.pop(-1)
 
-subCount = 0
-for line in fhandle:
-    if not line.startswith("Subject:"):
-        continue
-    subCount += 1
+def middle(ls):
+    return ls[1:-1]
 
-print ("There were %d subject lines in %s" %(subCount, fname))
+from string import ascii_lowercase
+ls  = list(ascii_lowercase)
+
+
+print ("Before chop: \n", ls)
+chop(ls)
+print (ls)
+print ("After chop: \n", ls)
+
+ls = list(ascii_lowercase)
+print ("Before middle: \n", ls)
+print (middle(ls))
+print ("After middle: \n", ls)
