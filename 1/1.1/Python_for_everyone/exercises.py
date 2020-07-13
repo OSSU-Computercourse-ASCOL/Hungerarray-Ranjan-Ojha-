@@ -1,21 +1,19 @@
-# Exercise 2: Write a program that categorizes each mail message by
-# which day of the week the commit was done. To do this look for lines
-# that start with “From”, then look for the third word and keep a running
-# count of each of the days of the week. At the end of the program print
-# out the contents of your dictionary (order does not matter).
+# Exercise 3: Write a program to read through a mail log, build a his-
+# togram using a dictionary to count how many messages have come from
+# each email address, and print the dictionary.
 
 fname = input("Enter file name: ")
 try:
     fhandle = open(fname, "r")
 except FileNotFoundError:
-    print ("Counld not open the file", fname)
+    print ("%s : File not found" %fname)
     exit()
 
-days = dict()
+emails = dict()
 for line in fhandle:
     if not line.startswith("From "): continue
 
-    words = line.split()
-    days[words[2]] = days.get(words[2], 0) + 1
+    email = line.split()[1]
+    emails[email] = emails.get(email, 0) + 1
 
-print (days)
+print (emails)
