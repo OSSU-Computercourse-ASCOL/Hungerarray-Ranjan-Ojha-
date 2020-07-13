@@ -1,20 +1,19 @@
-# 4.6 Write a program to prompt the user for hours and rate per hour using input to compute gross pay. Pay should be the normal rate for hours up to 40 and time-and-a-half for the hourly rate for all hours worked above 40 hours. Put the logic to do the computation of pay in a function called computepay() and use the function to do the computation. The function should return a value. Use 45 hours and a rate of 10.50 per hour to test the program (the pay should be 498.75). You should use input to read a string and float() to convert the string to a number. Do not worry about error checking the user input unless you want to - you can assume the user types numbers properly. Do not name your variable sum or use the sum() function.
+# Exercise 1: Write a program which repeatedly reads numbers until the
+# user enters “done”. Once “done” is entered, print out the total, count,
+# and average of the numbers. If the user enters anything other than a
+# number, detect their mistake using try and except and print an error
+# message and skip to the next number.
 
-def getValue(promp):
-    while True:
-        try:
-            value = float(input("Enter " +  promp + " : "))
-            break
-        except:
-            print ("Error! enter a valid value")
-    return value
-
-def computepay(hour, rate):
-    if hour > 40:
-        return ((hour - 40) * 1.5 + 40) * rate
-    return hour * rate
-
-hrs = getValue("hour")
-rate = getValue("rate per hour")
-
-print(computepay(hrs, rate), end='\n')
+total = 0
+count = 0
+while True:
+    num = input("Enter a number: ")
+    if num == "done":
+        break
+    try:
+        total += float(num)
+        count += 1
+    except ValueError:
+        print ("Invalid input")
+        
+print (total, count, total/count)
