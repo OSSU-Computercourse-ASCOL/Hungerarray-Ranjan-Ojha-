@@ -1,24 +1,18 @@
-# Exercise 5: Write a program to read through the mail box data and
-# when you find line that starts with “From”, you will split the line into
-# words using the split function. We are interested in who sent the
-# message, which is the second word on the From line.
-# From stephen.marquard@uct.ac.za Sat Jan 5 09:14:16 2008
-# You will parse the From line and print out the second word for each
-# From line, then you will also count the number of From (not From:)
-# lines and print out a count at the end.
+# Exercise 1: Download a copy of the file www.py4e.com/code3/words.txt
+# Write a program that reads the words in words.txt and stores them as
+# keys in a dictionary. It doesn’t matter what the values are. Then you
+# can use the in operator as a fast way to check whether a string is in the
+# dictionary.
 
-try:
-    fname = input("Enter a file name: ")
-    fhandle = open (fname, "r")
-except FileNotFoundError:
-    print ("could not Open File", fname)
-    quit()
+fhandle = open("words.txt", "r")
+words = dict()
 
-fromCount = 0
 for line in fhandle:
-    if not line.startswith("From "): continue
-    currLine = line.split()
-    print(currLine[1])
-    fromCount += 1
+    for word in line.split():
+        words[word] = 0
 
-print ("There were %d lines in the file with From as the first word" %fromCount)
+search = input("Enter the word to search for: ")
+if search in words:
+    print ("Found")
+else:
+    print ("Not found")
