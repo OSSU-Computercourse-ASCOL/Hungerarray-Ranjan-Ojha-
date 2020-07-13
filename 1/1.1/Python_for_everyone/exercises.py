@@ -1,18 +1,21 @@
-# Exercise 1: Download a copy of the file www.py4e.com/code3/words.txt
-# Write a program that reads the words in words.txt and stores them as
-# keys in a dictionary. It doesn’t matter what the values are. Then you
-# can use the in operator as a fast way to check whether a string is in the
-# dictionary.
+# Exercise 2: Write a program that categorizes each mail message by
+# which day of the week the commit was done. To do this look for lines
+# that start with “From”, then look for the third word and keep a running
+# count of each of the days of the week. At the end of the program print
+# out the contents of your dictionary (order does not matter).
 
-fhandle = open("words.txt", "r")
-words = dict()
+fname = input("Enter file name: ")
+try:
+    fhandle = open(fname, "r")
+except FileNotFoundError:
+    print ("Counld not open the file", fname)
+    exit()
 
+days = dict()
 for line in fhandle:
-    for word in line.split():
-        words[word] = 0
+    if not line.startswith("From "): continue
 
-search = input("Enter the word to search for: ")
-if search in words:
-    print ("Found")
-else:
-    print ("Not found")
+    words = line.split()
+    days[words[2]] = days.get(words[2], 0) + 1
+
+print (days)
