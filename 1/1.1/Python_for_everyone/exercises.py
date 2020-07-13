@@ -1,27 +1,24 @@
-# Exercise 2: Write a program to prompt for a file name, and then read
-# through the file and look for lines of the form:
-# X-DSPAM-Confidence: 0.8475
-# When you encounter a line that starts with “X-DSPAM-Confidence:”
-# pull apart the line to extract the floating-point number on the line.
-# Count these lines and then compute the total of the spam confidence
-# values from these lines. When you reach the end of the file, print out
-# the average spam confidence.
+# Exercise 3: Sometimes when programmers get bored or want to have a
+# bit of fun, they add a harmless Easter Egg to their program. Modify
+# the program that prompts the user for the file name so that it prints a
+# funny message when the user types in the exact file name “na na boo
+# boo”. The program should behave normally for all other files which
+# exist and don’t exist.
 
 try:
     fname = input("Enter file name: ")
+    if fname == "na na boo boo":
+        print ("NA NA BOO BOO TO YOU - You have been punk'd!")
+        quit()
     fhandle = open(fname, "r")
 except FileNotFoundError:
-    print ("Invalid File Name")
+    print ("File cannot be opened:", fname)
     quit()
 
-lineCount = 0
-total = 0
+subCount = 0
 for line in fhandle:
-    if not line.startswith("X-DSPAM-Confidence:"):
+    if not line.startswith("Subject:"):
         continue
-    strt = line.find(":")
-    total += float(line[strt + 1:])
-    lineCount += 1
+    subCount += 1
 
-print ("Average spam confidence:", round(total/lineCount, 12))
-
+print ("There were %d subject lines in %s" %(subCount, fname))
