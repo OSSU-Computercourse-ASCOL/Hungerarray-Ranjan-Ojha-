@@ -1,19 +1,22 @@
-# Exercise 1: Write a program which repeatedly reads numbers until the
-# user enters “done”. Once “done” is entered, print out the total, count,
-# and average of the numbers. If the user enters anything other than a
-# number, detect their mistake using try and except and print an error
-# message and skip to the next number.
+# Exercise 2: Write another program that prompts for a list of numbers
+# as above and at the end prints out both the maximum and minimum of
+# the numbers instead of the average.
 
-total = 0
-count = 0
+currMax = None
+currMin = None
+
 while True:
     num = input("Enter a number: ")
     if num == "done":
         break
     try:
-        total += float(num)
-        count += 1
+        num = int(num)
+        if currMax is None or currMax < num:
+            currMax = num
+        if currMin is None or currMin > num:
+            currMin = num    
     except ValueError:
         print ("Invalid input")
-        
-print (total, count, total/count)
+
+print ("Maximum is", currMax)
+print ("Minimum is", currMin)
