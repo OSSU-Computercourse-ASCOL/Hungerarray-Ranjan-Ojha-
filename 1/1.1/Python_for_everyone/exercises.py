@@ -1,25 +1,23 @@
-# Exercise 1: Revise a previous program as follows: Read and parse the
-# “From” lines and pull out the addresses from the line. Count the num-
-# ber of messages from each person using a dictionary.
-# After all the data has been read, print the person with the most commits
-# by creating a list of (count, email) tuples from the dictionary. Then
-# sort the list in reverse order and print out the person who has the most
-# commits.
+# Exercise 2: This program counts the distribution of the hour of the day
+# for each of the messages. You can pull the hour from the “From” line
+# by finding the time string and then splitting that string into parts using
+# the colon character. Once you have accumulated the counts for each
+# hour, print out the counts, one per line, sorted by hour as shown below.
 
-fname = input ("Enter a file name: ")
+fname = input("Enter a file name: ")
 try:
     fhandle = open(fname, "r")
 except FileNotFoundError:
-    print ("%s Couldn't open the file." %fname)
+    print ("Did not find file %s" %fname)
     exit()
 
-# count the number of messages from each person using a dictionary
-messCount = dict()
+# make a histogram for hour
+hourCount = dict()
 for line in fhandle:
     if not line.startswith("From "): continue
-    email = line.split()[1]
-    messCount[email] = messCount.get(email, 0) + 1
 
-# list of count and email sorted in reverse order
-lst = sorted([(count, email) for (email, count) in messCount.items()], reverse=True)
-print (lst[0][1], lst[0][0])
+    hour = line.split()[-2].split(":")[0]
+    hourCount[hour] = hourCount.get(hour, 0) + 1
+
+for (hour,count) in sorted(hourCount.items()):
+    print (hour, count)
