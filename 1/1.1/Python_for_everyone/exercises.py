@@ -1,18 +1,27 @@
-# Finding Numbers in a Haystack
+# Exercise 1: Change the socket program socket1.py to prompt the user
+# for the URL so it can read any web page. You can use split('/') to
+# break the URL into its component parts so you can extract the host
+# name for the socket connect call. Add error checking using try and
+# except to handle the condition where the user enters an improperly
+# formatted or non-existent URL.
 
-# Sample data: (There are 90 values with a sum=445833)
-# Actual data: (There are 84 values and the sum ends with 868)
-# In this assignment you will read through and parse a file with text and numbers. You will extract all the numbers in the file and compute the sum of the numbers.
+import socket
 
-import re
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-fname = input("Enter file name: ")
+url = input("Enter url - ")
 try:
-    fhandle = open(fname, "r")
-except FileNotFoundError:
-    print ("%s file not found." %fname)
+    sock.connect((url, 80))
+except :
+    print ("couldn't connect to %s -> %s" %(url.split('/')[1], url))
     exit()
 
-data = fhandle.read()
-numList = [int(num) for num in re.findall(r'(\d+)',data)]
-print (sum(numList))
+cmd = 'GET http://data.pr4e.org/intro-short.txt HTTP/1.0\r\n\r\n'.encode()
+sock.send(cmd)
+
+while True:
+    data = sock.recv(512)
+    if not len(data): break
+    print(data.decode(), end=' ')
+
+sock.close()
