@@ -1,26 +1,26 @@
-# Exercise 4: Change the urllinks.py program to extract and count para-
-# graph (p) tags from the retrieved HTML document and display the
-# count of the paragraphs as the output of your program. Do not display
-# the paragraph text, only count them. Test your program on several
-# small web pages as well as some larger web pages.
+# Following Links in Python
 
-import urllib.request, urllib.parse, urllib.error
+# In this assignment you will write a Python program that expands on http://www.py4e.com/code3/urllinks.py. The program will use urllib to read the HTML from the data files below, extract the href= vaues from the anchor tags, scan for a tag that is in a particular position relative to the first name in the list, follow that link and repeat the process a number of times and report the last name you find.
+
+import urllib.request
 from bs4 import BeautifulSoup
 import ssl
 
-# Ignore SSL certificate errors
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-url = input('Enter - ')
-html = urllib.request.urlopen(url, context=ctx).read()
-soup = BeautifulSoup(html, 'html.parser')
+url = input("Enter URL: ")
+lim = int(input("Enter count: "))
+pos = int(input("Enter position: ")) - 1
 
-# Retrieve all of the anchor tags
-tags = soup('p')
-paraCount = 0
-# for tag in tags:
-#     paraCount += 0
+for i in range(lim):
+    print ("Retrieving: %s" %url)
+    html = urllib.request.urlopen(url, context = ctx).read()
+    soup = BeautifulSoup(html, "html.parser")
 
-print(len(tags))
+    tags = soup('a')
+    url = tags[pos]['href']
+
+print ("Retrieving: %s" %url)
+print (tags[pos].contents[0])
