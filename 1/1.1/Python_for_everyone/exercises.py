@@ -1,9 +1,8 @@
-# Exercise 1: Change the socket program socket1.py to prompt the user
-# for the URL so it can read any web page. You can use split('/') to
-# break the URL into its component parts so you can extract the host
-# name for the socket connect call. Add error checking using try and
-# except to handle the condition where the user enters an improperly
-# formatted or non-existent URL.
+# Exercise 2: Change your socket program so that it counts the number
+# of characters it has received and stops displaying any text after it has
+# shown 3000 characters. The program should retrieve the entire docu-
+# ment and count the total number of characters and display the count
+# of the number of characters at the end of the document.
 
 import socket
 
@@ -11,17 +10,21 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 url = input("Enter url - ")
 try:
-    sock.connect((url, 80))
+    sock.connect((url.split('/')[2], 80))
 except :
-    print ("couldn't connect to %s -> %s" %(url.split('/')[1], url))
+    print ("couldn't connect to %s -> %s" %(url.split('/')[2], url))
     exit()
 
-cmd = 'GET http://data.pr4e.org/intro-short.txt HTTP/1.0\r\n\r\n'.encode()
+cmd = ('GET ' + url + ' HTTP/1.0\r\n\r\n').encode()
 sock.send(cmd)
 
+charCount = 0
 while True:
-    data = sock.recv(512)
+    data = sock.recv(3000)
     if not len(data): break
-    print(data.decode(), end=' ')
+    if not charCount:
+        print(data.decode(), end=' ')
+    charCount += len(data)
 
+print (charCount)
 sock.close()
