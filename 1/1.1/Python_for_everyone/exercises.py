@@ -1,15 +1,22 @@
-# Exercise 1: Write a simple program to simulate the operation of the
-# grep command on Unix. Ask the user to enter a regular expression and
-# count the number of lines that matched the regular expression:
+# Exercise 2: Write a program to look for lines of the form:
+# New Revision: 39772
+# Extract the number from each of the lines using a regular expression
+# and the findall() method. Compute the average of the numbers and
+# print out the average as an integer.
 
 import re
 
-exp = input("Enter a regular expression: ")
+fname = input("Enter file: ")
+try:
+    fhandle = open(fname, "r")
+except FileNotFoundError:
+    print ("%s file was not found." %fname)
+    exit()
 
-search = re.compile(exp)
-lineCount = 0
-for line in open("mbox.txt", "r"):
-    if search.search(line):
-        lineCount += 1
+# extracting the number as a list
+numList = list()
+for line in fhandle:
+    numList.extend(re.findall(r"^New Revision: ([0-9]*)", line))
 
-print ("mbox.txt had %d lines that matched %s" %(lineCount, exp))
+# comupting average (since the list stores values as string converted them to int first)
+print( sum([int(elem) for elem in numList]) // len(numList))
