@@ -1,25 +1,15 @@
-# Exercise 3: Write a program that reads a file and prints the letters
-# in decreasing order of frequency. Your program should convert all the
-# input to lower case and only count the letters a-z. Your program should
-# not count spaces, digits, punctuation, or anything other than the letters
-# a-z. Find text samples from several different languages and see how
-# letter frequency varies between languages. Compare your results with
-# the tables at https://wikipedia.org/wiki/Letter_frequencies.
+# Exercise 1: Write a simple program to simulate the operation of the
+# grep command on Unix. Ask the user to enter a regular expression and
+# count the number of lines that matched the regular expression:
 
-fname = input("Enter a file name: ")
-try:
-    fhandle = open(fname, "r")
-except FileNotFoundError:
-    print ("Could not open file %s" %fname)
-    exit()
+import re
 
-# make a dictionary by reading file for each letter
-letterCount = dict()
-for line in fhandle:
-    for letter in line.lower():
-        if not letter.isalpha(): continue
-        letterCount[letter] = letterCount.get(letter, 0) + 1
+exp = input("Enter a regular expression: ")
 
-# print in descending order or letters frequency
-for elem in sorted(letterCount.items(), key= lambda letter: letter[1], reverse=True):
-    print (elem[0], elem[1])
+search = re.compile(exp)
+lineCount = 0
+for line in open("mbox.txt", "r"):
+    if search.search(line):
+        lineCount += 1
+
+print ("mbox.txt had %d lines that matched %s" %(lineCount, exp))
