@@ -1,37 +1,47 @@
-# Calling a JSON API
+# Counting Organizations
+# This application will read the mailbox data (mbox.txt) and count the number of email messages per organization (i.e. domain name of the email address) using a database with the following schema to maintain the counts.
 
-# In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/geojson.py. The program will prompt for a location, contact a web service and retrieve JSON for the web service and parse that data, and retrieve the first place_id from the JSON. A place ID is a textual identifier that uniquely identifies a place as within Google Maps
+# CREATE TABLE Counts (org TEXT, count INTEGER)
 
-import urllib.request, urllib.parse, urllib.error
-import json
-import ssl
+import sqlite3
+import re
 
-# Ignore certificate
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_flags = ssl.CERT_NONE
-while True:
-    try:
-        location = input("Enter location: ")
-        if not len(location): raise ValueError
-        break
-    except:
-        print("Enter a valid location")
+# opening the files (database.sqlite and mbox.txt)
+FILE = 'mbox.txt'
 
-parms = dict()
-parms['address'] = location
-parms['key'] = 42
-serviceurl = 'http://py4e-data.dr-chuck.net/json?'
+# opening or creating database file
+conn = sqlite3.connect('data/organization.sqlite')
+cur = conn.cursor()
 
-try:
-    url = serviceurl + urllib.parse.urlencode(parms)
-    print("Retrieving %s" %url)
-    data = urllib.request.urlopen(url, context = ctx)
-    data = data.read().decode()
-    print("Retrieved %d characters" %len(data))
-except:
-    print ("Couldn't connect to %s" %url)
-    exit()
+# opening mbox.txt
+fhand = open(FILE, "r")
 
-data = json.loads(data)
-print("Place id %s" %data['results'][0]['place_id'])
+# setup the database file for processing
+# Deleting existing tables if they exist and creating a new one
+cur.execute("DROP TABLE IF EXISTS Counts")
+cur.execute("""
+    CREATE TABLE Counts(
+        org TEXT UNIQUE,
+        count INTEGER
+    )
+""")
+
+# Process the mail to and add to database
+search = re.compile(r'^From: ([\w]+@[\w.]+)')
+for line in fhand:
+    # find all the emails from the file
+    line = search.search(line)
+    if line is None: continue
+    org = line.group().split('@')[1]
+    
+    # check to see if the org already exists on the database
+    cur.execute("SELECT count FROM Counts WHERE org = ?", (org,))
+    row = cur.fetchone()
+    if row is None:
+        # this is the first occurance of email
+        cur.execute("INSERT INTO Counts (org, count) VALUES (?,1)", (org,))
+    else:
+        # there is already org registered so increase the count
+        cur.execute("UPDATE Counts SET count = count + 1 WHERE org = ?", (org,))
+conn.commit()
+cur.close()
