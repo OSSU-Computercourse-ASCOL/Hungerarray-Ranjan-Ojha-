@@ -1,27 +1,37 @@
-# Extracting Data from JSON
+# Calling a JSON API
 
-# In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/json2.py. The program will prompt for a URL, read the JSON data from that URL using urllib and then parse and extract the comment counts from the JSON data, compute the sum of the numbers in the file and enter the sum below:
+# In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/geojson.py. The program will prompt for a location, contact a web service and retrieve JSON for the web service and parse that data, and retrieve the first place_id from the JSON. A place ID is a textual identifier that uniquely identifies a place as within Google Maps
 
 import urllib.request, urllib.parse, urllib.error
 import json
 import ssl
 
-# ignore ssl certificates 
+# Ignore certificate
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
+ctx.verify_flags = ssl.CERT_NONE
+while True:
+    try:
+        location = input("Enter location: ")
+        if not len(location): raise ValueError
+        break
+    except:
+        print("Enter a valid location")
 
-url = input("Enter location: ")
+parms = dict()
+parms['address'] = location
+parms['key'] = 42
+serviceurl = 'http://py4e-data.dr-chuck.net/json?'
+
 try:
+    url = serviceurl + urllib.parse.urlencode(parms)
     print("Retrieving %s" %url)
     data = urllib.request.urlopen(url, context = ctx)
     data = data.read().decode()
-    print ("Retrieved %d characters" %len(data))
+    print("Retrieved %d characters" %len(data))
 except:
-    print("Couldn't connect to %s" %url)
+    print ("Couldn't connect to %s" %url)
     exit()
 
 data = json.loads(data)
-
-print ("Count: %d" %len(data['comments']))
-print("Sum: %d" %sum([elem['count'] for elem in data['comments']]))
+print("Place id %s" %data['results'][0]['place_id'])
