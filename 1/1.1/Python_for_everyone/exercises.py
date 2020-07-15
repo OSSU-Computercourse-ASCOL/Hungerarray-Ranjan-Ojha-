@@ -1,26 +1,32 @@
-# Following Links in Python
+# Extracting Data from XML
 
-# In this assignment you will write a Python program that expands on http://www.py4e.com/code3/urllinks.py. The program will use urllib to read the HTML from the data files below, extract the href= vaues from the anchor tags, scan for a tag that is in a particular position relative to the first name in the list, follow that link and repeat the process a number of times and report the last name you find.
+# In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/geoxml.py. The program will prompt for a URL, read the XML data from that URL using urllib and then parse and extract the comment counts from the XML data, compute the sum of the numbers in the file.
 
-import urllib.request
-from bs4 import BeautifulSoup
+import urllib.request, urllib.parse, urllib.error
+import xml.etree.ElementTree as ET
 import ssl
 
+# Ignore SSL certificate errors
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-url = input("Enter URL: ")
-lim = int(input("Enter count: "))
-pos = int(input("Enter position: ")) - 1
+url = input("Enter location: ")
+try:
+    print ("Retrieving %s" %url)
+    bdata = urllib.request.urlopen(url, context = ctx)
+except:
+    print ("Couldn't connect to location %s" %url)
+    exit()
 
-for i in range(lim):
-    print ("Retrieving: %s" %url)
-    html = urllib.request.urlopen(url, context = ctx).read()
-    soup = BeautifulSoup(html, "html.parser")
+data = bdata.read()
+print ("Retrieved %d characters" %len(data))
+data = ET.fromstring(data.decode())
 
-    tags = soup('a')
-    url = tags[pos]['href']
+counts = data.findall('.//count')
 
-print ("Retrieving: %s" %url)
-print (tags[pos].contents[0])
+print ("Count:", len(counts))
+print ("Sum:", sum([int(count.text) for count in counts]))
+
+
+
