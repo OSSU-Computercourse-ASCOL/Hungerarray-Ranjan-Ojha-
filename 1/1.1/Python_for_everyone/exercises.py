@@ -1,32 +1,27 @@
-# Extracting Data from XML
+# Extracting Data from JSON
 
-# In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/geoxml.py. The program will prompt for a URL, read the XML data from that URL using urllib and then parse and extract the comment counts from the XML data, compute the sum of the numbers in the file.
+# In this assignment you will write a Python program somewhat similar to http://www.py4e.com/code3/json2.py. The program will prompt for a URL, read the JSON data from that URL using urllib and then parse and extract the comment counts from the JSON data, compute the sum of the numbers in the file and enter the sum below:
 
 import urllib.request, urllib.parse, urllib.error
-import xml.etree.ElementTree as ET
+import json
 import ssl
 
-# Ignore SSL certificate errors
+# ignore ssl certificates 
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
 url = input("Enter location: ")
 try:
-    print ("Retrieving %s" %url)
-    bdata = urllib.request.urlopen(url, context = ctx)
+    print("Retrieving %s" %url)
+    data = urllib.request.urlopen(url, context = ctx)
+    data = data.read().decode()
+    print ("Retrieved %d characters" %len(data))
 except:
-    print ("Couldn't connect to location %s" %url)
+    print("Couldn't connect to %s" %url)
     exit()
 
-data = bdata.read()
-print ("Retrieved %d characters" %len(data))
-data = ET.fromstring(data.decode())
+data = json.loads(data)
 
-counts = data.findall('.//count')
-
-print ("Count:", len(counts))
-print ("Sum:", sum([int(count.text) for count in counts]))
-
-
-
+print ("Count: %d" %len(data['comments']))
+print("Sum: %d" %sum([elem['count'] for elem in data['comments']]))
