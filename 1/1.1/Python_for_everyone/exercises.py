@@ -1,47 +1,99 @@
-# Counting Organizations
-# This application will read the mailbox data (mbox.txt) and count the number of email messages per organization (i.e. domain name of the email address) using a database with the following schema to maintain the counts.
+# Musical Track Database
+# This application will read an iTunes export file in XML and produce a properly normalized database
 
-# CREATE TABLE Counts (org TEXT, count INTEGER)
 
+import xml.etree.ElementTree as ET
 import sqlite3
-import re
 
-# opening the files (database.sqlite and mbox.txt)
-FILE = 'mbox.txt'
-
-# opening or creating database file
-conn = sqlite3.connect('data/organization.sqlite')
+conn = sqlite3.connect('data/trackdb.sqlite')
 cur = conn.cursor()
 
-# opening mbox.txt
-fhand = open(FILE, "r")
 
-# setup the database file for processing
-# Deleting existing tables if they exist and creating a new one
-cur.execute("DROP TABLE IF EXISTS Counts")
-cur.execute("""
-    CREATE TABLE Counts(
-        org TEXT UNIQUE,
-        count INTEGER
-    )
-""")
+# Make some fresh tables using executescript()
+cur.executescript('''
+DROP TABLE IF EXISTS Artist;
+DROP TABLE IF EXISTS Genre;
+DROP TABLE IF EXISTS Album;
+DROP TABLE IF EXISTS Track;
 
-# Process the mail to and add to database
-search = re.compile(r'^From: ([\w]+@[\w.]+)')
-for line in fhand:
-    # find all the emails from the file
-    line = search.search(line)
-    if line is None: continue
-    org = line.group().split('@')[1]
-    
-    # check to see if the org already exists on the database
-    cur.execute("SELECT count FROM Counts WHERE org = ?", (org,))
-    row = cur.fetchone()
-    if row is None:
-        # this is the first occurance of email
-        cur.execute("INSERT INTO Counts (org, count) VALUES (?,1)", (org,))
-    else:
-        # there is already org registered so increase the count
-        cur.execute("UPDATE Counts SET count = count + 1 WHERE org = ?", (org,))
-conn.commit()
-cur.close()
+CREATE TABLE Artist (
+    id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    name    TEXT UNIQUE
+);
+
+CREATE TABLE Genre (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    name   TEXT UNIQUE 
+);
+
+CREATE TABLE Album (
+    id  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    artist_id  INTEGER,
+    title   TEXT UNIQUE
+);
+
+CREATE TABLE Track (
+    id  INTEGER NOT NULL PRIMARY KEY 
+        AUTOINCREMENT UNIQUE,
+    title TEXT  UNIQUE,
+    album_id  INTEGER,
+    genre_id INTEGER,
+    len INTEGER, rating INTEGER, count INTEGER
+);
+''')
+
+
+fname = input('Enter file name: ')
+if ( len(fname) < 1 ) : fname = 'Library.xml'
+
+# <key>Track ID</key><integer>369</integer>
+# <key>Name</key><string>Another One Bites The Dust</string>
+# <key>Artist</key><string>Queen</string>
+def lookup(d, key):
+    found = False
+    for child in d:
+        if found : return child.text
+        if child.tag == 'key' and child.text == key :
+            found = True
+    return None
+
+stuff = ET.parse(fname)
+all = stuff.findall('dict/dict/dict')
+print('Dict count:', len(all))
+for entry in all:
+    if ( lookup(entry, 'Track ID') is None ) : continue
+
+    name = lookup(entry, 'Name')
+    artist = lookup(entry, 'Artist')
+    album = lookup(entry, 'Album')
+    genre = lookup(entry, 'Genre')
+    count = lookup(entry, 'Play Count')
+    rating = lookup(entry, 'Rating')
+    length = lookup(entry, 'Total Time')
+
+    if name is None or artist is None or album is None or genre is None: 
+        continue
+
+    print(name, artist, album, genre, count, rating, length)
+
+    cur.execute('''INSERT OR IGNORE INTO Artist (name) 
+        VALUES ( ? )''', ( artist, ) )
+    cur.execute('SELECT id FROM Artist WHERE name = ? ', (artist, ))
+    artist_id = cur.fetchone()[0]
+
+    cur.execute('''INSERT OR IGNORE INTO Album (title, artist_id) 
+        VALUES ( ?, ? )''', ( album, artist_id ) )
+    cur.execute('SELECT id FROM Album WHERE title = ? ', (album, ))
+    album_id = cur.fetchone()[0]
+
+    cur.execute('''INSERT OR IGNORE INTO Genre (name)
+        VALUES ( ? )''', (genre, ))
+    cur.execute('SELECT ID FROM Genre WHERE name = ?', (genre, ))
+    genre_id = cur.fetchone()[0]
+
+    cur.execute('''INSERT OR REPLACE INTO Track
+        (title, album_id, genre_id, len, rating, count) 
+        VALUES ( ?, ?, ?, ?, ?, ? )''', 
+        ( name, album_id, genre_id, length, rating, count ) )
+
+    conn.commit()
