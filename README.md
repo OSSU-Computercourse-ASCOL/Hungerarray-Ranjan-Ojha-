@@ -11,7 +11,7 @@ this is my take on OSSU courses and the planned roadmap I am planning to adopt. 
    - [ ] [Introduction to Computer Science and Programming using Python](https://www.edx.org/course/introduction-to-computer-science-and-programming-7)
           
           (*^_^*) update 1: the above course is now currently in haitus, simply because I have caught up with current material and new (as well as the final) one should be updated soon ... will have to wait until then ...
-   - [ ] [Python for Everyone](https://www.coursera.org/specializations/python)
+   - [X] [Python for Everyone](https://www.coursera.org/specializations/python)
    
     q(≧▽≦q) update 1: added this as well, since I would have to wait for a few days to complete above course. Also I saw this has topics about webScrapping and everything ... and I am currently not knowledgeable about those stuff. (☆▽☆)
   #### 2. Introduction to CS Tools 
