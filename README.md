@@ -18,7 +18,10 @@ this is my take on OSSU courses and the planned roadmap I am planning to adopt. 
     （￣︶￣）↗ update 2:This is after completing course ... overall I definitely recommend it. It atleast shows you what's to come ahead. Also the pacing by Dr. Chuck was very good
     and the contents were well presented
   #### 2. Introduction to CS Tools 
-   - [ ] [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
+   - [X] [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
+   
+    (｡･∀･)ﾉﾞ Update 3: Overall recommendation ... try it. It just gives you generall overview on topics but since it is a information dump,
+    it could get hard to understand things. Then again it is here just to give you an overview of things to come.
 
 
 ## 2. Core CS
