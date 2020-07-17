@@ -14,6 +14,9 @@ this is my take on OSSU courses and the planned roadmap I am planning to adopt. 
    - [X] [Python for Everyone](https://www.coursera.org/specializations/python)
    
     q(≧▽≦q) update 1: added this as well, since I would have to wait for a few days to complete above course. Also I saw this has topics about webScrapping and everything ... and I am currently not knowledgeable about those stuff. (☆▽☆)
+    
+    （￣︶￣）↗ update 2:This is after completing course ... overall I definitely recommend it. It atleast shows you what's to come ahead. Also the pacing by Dr. Chuck was very good
+    and the contents were well presented
   #### 2. Introduction to CS Tools 
    - [ ] [The Missing Semester of Your CS Education](https://missing.csail.mit.edu/)
 
