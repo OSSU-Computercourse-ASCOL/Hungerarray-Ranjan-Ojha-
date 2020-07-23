@@ -8,9 +8,10 @@ this is my take on OSSU courses and the planned roadmap I am planning to adopt. 
 
 ## 1. Intro CS
   #### 1. Introduction to computer science 
-   - [ ] [Introduction to Computer Science and Programming using Python](https://www.edx.org/course/introduction-to-computer-science-and-programming-7)
+   - [X] [Introduction to Computer Science and Programming using Python](https://www.edx.org/course/introduction-to-computer-science-and-programming-7)
           
           (*^_^*) update 1: the above course is now currently in haitus, simply because I have caught up with current material and new (as well as the final) one should be updated soon ... will have to wait until then ...
+          (*￣3￣)╭ Update 4: finished finally ... it's good gets you started on things ... nothing much to add here 
    - [X] [Python for Everyone](https://www.coursera.org/specializations/python)
    
     q(≧▽≦q) update 1: added this as well, since I would have to wait for a few days to complete above course. Also I saw this has topics about webScrapping and everything ... and I am currently not knowledgeable about those stuff. (☆▽☆)
@@ -26,7 +27,9 @@ this is my take on OSSU courses and the planned roadmap I am planning to adopt. 
 
 ## 2. Core CS
   #### 1. Core programming
-   - [ ] [How to Code - Simple Data](https://www.edx.org/course/how-to-code-simple-data)
+   - [X] [How to Code - Simple Data](https://www.edx.org/course/how-to-code-simple-data)
+                                                                           
+         ヾ(^▽^*))) this was really good intro to design process. I believe you everyone should adopt this ... 
    - [ ] [How to Code - Complex Data](https://www.edx.org/course/how-to-code-complex-data)
    - [ ] [Programming Languages, Part A](https://www.coursera.org/learn/programming-languages)
    - [ ] [Programming Languages, Part B](https://www.coursera.org/learn/programming-languages-part-b)
