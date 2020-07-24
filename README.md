@@ -29,8 +29,10 @@ this is my take on OSSU courses and the planned roadmap I am planning to adopt. 
   #### 1. Core programming
    - [X] [How to Code - Simple Data](https://www.edx.org/course/how-to-code-simple-data)
                                                                            
-         ヾ(^▽^*))) this was really good intro to design process. I believe you everyone should adopt this ... 
+         update 4: ヾ(^▽^*))) this was really good intro to design process. I believe you everyone should adopt this ... 
    - [ ] [How to Code - Complex Data](https://www.edx.org/course/how-to-code-complex-data)
+   
+    update 5: o(*￣▽￣*)ブ well somehow this is not working properly the site is just bugged, and won't allow me to look at the videos properly ... so I this is going on hiatus for now
    - [ ] [Programming Languages, Part A](https://www.coursera.org/learn/programming-languages)
    - [ ] [Programming Languages, Part B](https://www.coursera.org/learn/programming-languages-part-b)
    - [ ] [Programming Languages, Part C](https://www.coursera.org/learn/programming-languages-part-c)
